@@ -4,10 +4,10 @@ import CompareComponent from "../components/CompareComponent";
 
 export default function Compare() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-dinosaur-pattern bg-cover bg-center inset-0 z-0">
       <Navbar />
       <main className="flex-grow container mx-auto p-4">
-        <h1 className="font-jurassic text-4xl text-center mb-8 text-white">
+        <h1 className="jurassic-font text-9xl text-center mb-8 ">
           Compare Dinosaurs
         </h1>
         <CompareComponent />

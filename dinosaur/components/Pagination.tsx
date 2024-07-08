@@ -27,6 +27,30 @@ const Pagination: React.FC<PaginationProps> = ({
       startPage = Math.max(totalPages - maxPageNumbers + 1, 1);
     }
 
+    if (startPage > 1) {
+      pageNumbers.push(
+        <li key={1} className="mx-1">
+          <button
+            onClick={() => paginate(1)}
+            className={`px-3 py-1 rounded ${
+              currentPage === 1
+                ? "bg-blue-500 text-white"
+                : "bg-white text-blue-500"
+            }`}
+          >
+            1
+          </button>
+        </li>
+      );
+      if (startPage > 2) {
+        pageNumbers.push(
+          <li key="ellipsis-start" className="mx-1">
+            <span className="px-3 py-1">...</span>
+          </li>
+        );
+      }
+    }
+
     for (let i = startPage; i <= endPage; i++) {
       pageNumbers.push(
         <li key={i} className="mx-1">
@@ -39,6 +63,30 @@ const Pagination: React.FC<PaginationProps> = ({
             }`}
           >
             {i}
+          </button>
+        </li>
+      );
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        pageNumbers.push(
+          <li key="ellipsis-end" className="mx-1">
+            <span className="px-3 py-1">...</span>
+          </li>
+        );
+      }
+      pageNumbers.push(
+        <li key={totalPages} className="mx-1">
+          <button
+            onClick={() => paginate(totalPages)}
+            className={`px-3 py-1 rounded ${
+              currentPage === totalPages
+                ? "bg-blue-500 text-white"
+                : "bg-white text-blue-500"
+            }`}
+          >
+            {totalPages}
           </button>
         </li>
       );
@@ -60,37 +108,7 @@ const Pagination: React.FC<PaginationProps> = ({
             </button>
           </li>
         )}
-        {currentPage > 3 && (
-          <li className="mx-1">
-            <button
-              onClick={() => paginate(1)}
-              className="px-3 py-1 rounded bg-white text-blue-500"
-            >
-              1
-            </button>
-          </li>
-        )}
-        {currentPage > 4 && (
-          <li className="mx-1">
-            <span className="px-3 py-1">...</span>
-          </li>
-        )}
         {renderPageNumbers()}
-        {currentPage < totalPages - 3 && (
-          <li className="mx-1">
-            <span className="px-3 py-1">...</span>
-          </li>
-        )}
-        {currentPage < totalPages - 2 && (
-          <li className="mx-1">
-            <button
-              onClick={() => paginate(totalPages)}
-              className="px-3 py-1 rounded bg-white text-blue-500"
-            >
-              {totalPages}
-            </button>
-          </li>
-        )}
         {currentPage < totalPages && (
           <li className="mx-1">
             <button
