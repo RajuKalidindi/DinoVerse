@@ -15,6 +15,7 @@ const Gallery = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [sortOrder, setSortOrder] = useState<string>("");
 
   const calculateItemsPerPage = () => {
     const width = window.innerWidth;
@@ -25,6 +26,7 @@ const Gallery = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    // Fetch dinosaurs
     fetch("http://localhost:8080/api/dinosaurs/")
       .then((res) => res.json())
       .then((data) => {
@@ -36,6 +38,28 @@ const Gallery = () => {
       .catch((error) => {
         console.error("Failed to fetch dinosaurs:", error);
         setIsLoading(false);
+      });
+
+    // Fetch diets
+    fetch("http://localhost:8080/api/dinosaurs/diets")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setDiets(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch diets:", error);
+      });
+
+    // Fetch types
+    fetch("http://localhost:8080/api/dinosaurs/types")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setTypes(data);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch types:", error);
       });
   }, []);
 
@@ -60,8 +84,7 @@ const Gallery = () => {
       filtered = dinosaurs.filter((dino) => dino.diet === diet);
     }
     setFilteredDinosaurs(filtered);
-    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
-    setCurrentPage(1);
+    applySort(filtered, sortOrder);
   };
 
   const handleTypeChange = (type: string) => {
@@ -70,7 +93,23 @@ const Gallery = () => {
       filtered = dinosaurs.filter((dino) => dino.type === type);
     }
     setFilteredDinosaurs(filtered);
-    setTotalPages(Math.ceil(filtered.length / itemsPerPage));
+    applySort(filtered, sortOrder);
+  };
+
+  const handleSortChange = (sort: string) => {
+    setSortOrder(sort);
+    applySort(filteredDinosaurs, sort);
+  };
+
+  const applySort = (dinos: Dinosaur[], sort: string) => {
+    let sortedDinosaurs = [...dinos];
+    if (sort === "asc") {
+      sortedDinosaurs.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sort === "desc") {
+      sortedDinosaurs.sort((a, b) => b.name.localeCompare(a.name));
+    }
+    setFilteredDinosaurs(sortedDinosaurs);
+    setTotalPages(Math.ceil(sortedDinosaurs.length / itemsPerPage));
     setCurrentPage(1);
   };
 
@@ -93,6 +132,7 @@ const Gallery = () => {
           types={types}
           onDietChange={handleDietChange}
           onTypeChange={handleTypeChange}
+          onSortChange={handleSortChange}
         />
         {isLoading ? (
           <div className="flex justify-center items-center">

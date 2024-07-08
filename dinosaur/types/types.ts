@@ -14,9 +14,9 @@ export interface Dinosaur {
 }
 
 export interface Diet {
-  name: string;
+  diet: string;
 }
 
 export interface DinosaurType {
-  name: string;
+  type: string;
 }
