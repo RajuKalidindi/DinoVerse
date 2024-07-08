@@ -1,0 +1,57 @@
+/* styles/globals.css */
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@font-face {
+  font-family: "Jurassic";
+  src: url("/fonts/JurassicPark-BL48.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.jurassic-font {
+  font-family: "Jurassic", sans-serif;
+  letter-spacing: 2px;
+}
+
+.jungle-card {
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
+}
+
+.quiz-card {
+  background: rgb(255, 255, 255, 0.75);
+}
+
+.jungle-card:hover {
+  box-shadow: 10px 10px 20px #bebebe, -10px -10px 20px #ffffff;
+}
+
+.jungle-input {
+  border: none;
+  padding: 10px;
+  color: black;
+  font-size: 16px;
+  border-radius: 4px;
+  outline: none;
+}
+
+.jungle-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.jungle-button:hover {
+  background-color: #45a049;
+}
