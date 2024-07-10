@@ -11,7 +11,7 @@ const DinosaurDetail: React.FC<Props> = ({ dinosaur }) => {
   )}`;
 
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden detail-card">
       <div className="relative w-full h-64">
         <Image
           src={dinosaur.image_url}

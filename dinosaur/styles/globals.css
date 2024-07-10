@@ -21,6 +21,16 @@
   box-shadow: 5px 5px 10px #bebebe, -5px -5px 10px #ffffff;
 }
 
+.detail-card {
+  max-height: 500px;
+  overflow-y: auto;
+}
+@media (min-width: 1600px) {
+  .detail-card {
+    max-height: 750px;
+  }
+}
+
 .quiz-card {
   background: rgb(255, 255, 255, 0.75);
 }
