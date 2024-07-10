@@ -17,6 +17,10 @@ const Gallery = () => {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [sortOrder, setSortOrder] = useState<string>("");
 
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:8080/api/dinosaurs";
+
   const calculateItemsPerPage = () => {
     const width = window.innerWidth;
     if (width < 768) return 2;
@@ -27,7 +31,7 @@ const Gallery = () => {
   useEffect(() => {
     setIsLoading(true);
     // Fetch dinosaurs
-    fetch("http://localhost:8080/api/dinosaurs/")
+    fetch(`${apiUrl}`)
       .then((res) => res.json())
       .then((data) => {
         setDinosaurs(data);
@@ -41,7 +45,7 @@ const Gallery = () => {
       });
 
     // Fetch diets
-    fetch("http://localhost:8080/api/dinosaurs/diets")
+    fetch(`${apiUrl}/diets`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -52,7 +56,7 @@ const Gallery = () => {
       });
 
     // Fetch types
-    fetch("http://localhost:8080/api/dinosaurs/types")
+    fetch(`${apiUrl}/types`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

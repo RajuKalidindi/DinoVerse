@@ -23,18 +23,19 @@ const QuizComponent: React.FC = () => {
   const [showCorrect, setShowCorrect] = useState(false);
   const router = useRouter();
 
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:8080/api/dinosaurs";
+
   const handleClick = (name: string) => {
     router.push(`/more-details?name=${name}`);
   };
 
   const fetchNewQuestion = async () => {
-    const response = await fetch(
-      "http://localhost:8080/api/dinosaurs/random/image"
-    );
+    const response = await fetch(`${apiUrl}/random/image`);
     const imageData = await response.json();
     const namesResponse = await fetch(
-      "http://localhost:8080/api/dinosaurs/random/names?exclude=" +
-        imageData.name
+      `${apiUrl}/random/names?exclude=` + imageData.name
     );
     const namesData = await namesResponse.json();
 

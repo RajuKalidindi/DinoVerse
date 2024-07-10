@@ -35,7 +35,7 @@ const Dinosaur = mongoose.model(
   "dinosaur_collection"
 );
 
-app.get("/api/home", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ message: "Hello World!" });
 });
 

@@ -12,6 +12,10 @@ const MoreDetails: React.FC = () => {
   const router = useRouter();
   const { name } = router.query;
 
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:8080/api/dinosaurs";
+
   useEffect(() => {
     if (name) {
       const searchName = name as string;
@@ -40,9 +44,7 @@ const MoreDetails: React.FC = () => {
 
   const fetchAllDinosaurNames = async (term: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/dinosaurs/names?query=${term}`
-      );
+      const response = await fetch(`${apiUrl}/names?query=${term}`);
       const data = await response.json();
       setAutocompleteResults(
         data.filter((name: string) => name !== searchTerm)
@@ -55,9 +57,7 @@ const MoreDetails: React.FC = () => {
 
   const fetchDinosaurs = async (term: string) => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/dinosaurs/by-name?name=${term}`
-      );
+      const response = await fetch(`${apiUrl}/by-name?name=${term}`);
       const data = await response.json();
       if (data.message === "Dinosaur not found") {
         setError("Dinosaur not found. Please check for any typos.");

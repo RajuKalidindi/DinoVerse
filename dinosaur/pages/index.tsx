@@ -11,9 +11,13 @@ const Index = () => {
   );
   const intervalIdRef = useRef<NodeJS.Timeout | null>(null);
 
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:8080/api/dinosaurs";
+
   useEffect(() => {
     const fetchDinosaurOfTheDay = () => {
-      fetch("http://localhost:8080/api/dinosaurs/random")
+      fetch(`${apiUrl}/random`)
         .then((res) => res.json())
         .then((data) => {
           setDinosaurOfTheDay(data);

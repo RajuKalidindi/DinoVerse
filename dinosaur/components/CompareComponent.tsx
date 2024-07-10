@@ -19,6 +19,10 @@ const CompareComponent: React.FC = () => {
   const [selectedInput, setSelectedInput] = useState<number | null>(null);
   const [similarDinosaurs, setSimilarDinosaurs] = useState<Dinosaur[]>([]);
 
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_BASE_URL ||
+    "http://localhost:8080/api/dinosaurs";
+
   useEffect(() => {
     if (dinosaur1) {
       fetchSimilarDinosaurs(dinosaur1);
@@ -49,9 +53,7 @@ const CompareComponent: React.FC = () => {
           .map(([key, value]) => `${key}=${encodeURIComponent(String(value))}`)
           .join("&");
 
-        const response = await fetch(
-          `http://localhost:8080/api/dinosaurs/search?${queryString}`
-        );
+        const response = await fetch(`${apiUrl}/search?${queryString}`);
         if (!response.ok) throw new Error("Failed to fetch dinosaurs");
 
         const data: Dinosaur[] = await response.json();
@@ -64,15 +66,13 @@ const CompareComponent: React.FC = () => {
       }
 
       if (allResults.length < 4) {
-        const response = await fetch(
-          `http://localhost:8080/api/dinosaurs/random/names?exclude=${name}`
-        );
+        const response = await fetch(`${apiUrl}/random/names?exclude=${name}`);
         const randomNames = await response.json();
 
         for (const randomName of randomNames) {
           if (allResults.length >= 4) break;
           const dinoResponse = await fetch(
-            `http://localhost:8080/api/dinosaurs/by-name?name=${randomName}`
+            `${apiUrl}/by-name?name=${randomName}`
           );
           const randomDino = await dinoResponse.json();
           if (!allResults.some((d) => d.name === randomDino.name)) {
@@ -95,9 +95,7 @@ const CompareComponent: React.FC = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/dinosaurs/by-name?name=${name}`
-      );
+      const response = await fetch(`${apiUrl}/by-name?name=${name}`);
       if (!response.ok) {
         throw new Error("Failed to fetch dinosaur data");
       }
@@ -154,9 +152,7 @@ const CompareComponent: React.FC = () => {
     }
 
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/dinosaurs/names?query=${inputValue}`
-      );
+      const response = await fetch(`${apiUrl}/names?query=${inputValue}`);
       if (!response.ok) {
         throw new Error("Failed to fetch autocomplete suggestions");
       }
