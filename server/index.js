@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -7,7 +8,7 @@ const port = process.env.PORT || 8080;
 app.use(cors());
 
 mongoose
-  .connect("mongodb://localhost:27017/dinosaur_db")
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
   })
